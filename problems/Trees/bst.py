@@ -8,7 +8,7 @@ class Node():
         self.data = data
 
     def is_binary_search_tree(self):
-        return self.__is_valid(self, float("-infinity"), float("infinity"))
+        return self.__is_valid(float("-infinity"), float("infinity"))
 
     def __is_valid(self, minimum, maximum):
         if self == None:
@@ -17,6 +17,16 @@ class Node():
             return False
         solution = self.left.is_valid(minimum, self.val)
         solution = solution and self.right.is_valid(self.val, maximum)
+        return solution
+
+    def self_balancing_tree(self):
+        #https://gist.github.com/girish3/a8e3931154af4da89995
+        pass
+
+    def continuously_update_median(self):
+        # http://www.ardendertat.com/2011/11/03/programming-interview-questions-13-median-of-integer-stream/
+        #http://stackoverflow.com/questions/7842347/find-median-in-olog-n
+        pass
 
     def search(self, item):
         if self == None:
@@ -50,6 +60,47 @@ class Node():
                     self.right.insert(item)
         return self
 
+    def lowest_common_ancestor(self, v1, v2):
+        # look for each vertex and while searching note down the roots traversed.
+        root = self
+        search_path_v1 = []
+        search_path_v2 = []
+        # searching for v1
+        found = False
+        parent = root
+        while not found and root:
+            parent = root
+            if v1 < root.data:
+                root = root.left
+                search_path_v1.append(parent.data)
+            elif v1 > root.data:
+                root = root.right
+                search_path_v1.append(parent.data)
+            elif v1 == root.data:
+                found = True
+
+        # searching for v2
+        root = self
+        found = False
+        parent = self
+        while not found and root:
+            parent = root
+            if v2 < root.data:
+                root = root.left
+                search_path_v2.append(parent.data)
+            elif v2 > root.data:
+                root = root.right
+                search_path_v2.append(parent.data)
+            elif v2 == root.data:
+                found = True
+
+        # find the common elements in the 2 lists
+        common = [item for item in search_path_v1 if item in search_path_v2]
+        print min(common)
+
+    def swap_nodes(self):
+        pass
+
 
 def reconstruct_bst(preorder, inorder):
         # preorder and inorder are list of elements.
@@ -70,10 +121,10 @@ def reconstruct_bst(preorder, inorder):
 
 preorder = [1, 2, 4, 8, 9, 10, 11, 5, 3, 6, 7]
 inorder = [8, 4, 10, 9, 11, 2, 5, 1, 6, 3, 7]
-print reconstruct_bst(preorder, inorder).left.data
-print reconstruct_bst(preorder, inorder).right.data
-print reconstruct_bst(preorder, inorder).right.right.data
-print reconstruct_bst(preorder, inorder).right.left.data
+#print reconstruct_bst(preorder, inorder).left.data
+#print reconstruct_bst(preorder, inorder).right.data
+#print reconstruct_bst(preorder, inorder).right.right.data
+#print reconstruct_bst(preorder, inorder).right.left.data
 
 
 def sorted_list_to_bst(numbers):
@@ -90,22 +141,29 @@ def sorted_list_to_bst_recurse(numbers, begin, end):
     root.right = sorted_list_to_bst_recurse(numbers, mid + 1, end)
     return root
 
-bst = sorted_list_to_bst([1, 2, 3])
-print bst.data
-print bst.left.data
-print bst.right.data
+#bst = sorted_list_to_bst([1, 2, 3])
+# print bst.data
+# print bst.left.data
+# print bst.right.data
 
 # search item in bst
-tree = Node(2)
-tree.left = Node(1)
-tree.right = Node(3)
-print tree.search(4)
+# tree = Node(2)
+# tree.left = Node(1)
+# tree.right = Node(3)
+# print tree.search(4)
 
 
 #Insert item to bst
-tree = Node(2)
-tree.left = Node(1)
-inserted = tree.insert(3)
-print inserted.right.data
+# tree = Node(2)
+# tree.left = Node(1)
+# inserted = tree.insert(3)
+# print inserted.right.data
 
-
+# find lowest common ancestor
+tree = Node(4)
+tree. left = Node(2)
+tree.right = Node(7)
+tree.left.left = Node(1)
+tree.left.right = Node(3)
+tree.right.left = Node(6)
+tree.lowest_common_ancestor(1, 7)
