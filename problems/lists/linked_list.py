@@ -102,8 +102,6 @@ class Node(object):
                 return 0
             headA = headA.next_node
             headB = headB.next_node
-        if headA == None and headB == None:
-            return 1
         return 0
 
     def MergeLists(headA, headB):
@@ -390,26 +388,25 @@ def SortedInsert(head, data):
             current.prev = copy_current
         return head
 
-    def Reverse(head):
+
+def Reverse(head):
         temp = None
         current = head
-             
-        # Swap next and prev for all nodes of 
+
+        # Swap next and prev for all nodes of
         # doubly linked list
         while current:
-                temp = current.prev 
+                temp = current.prev
                 current.prev = current.next
                 current.next = temp
                 current = current.prev
-     
-        # Before changing head, check for the cases like 
+
+        # Before changing head, check for the cases like
         # empty list and list with only one node
         if temp is not None:
             head = temp.prev
-            
+
         return head
-        
-  
 
 number = Node(2)
 number = SortedInsert(number, 1)
